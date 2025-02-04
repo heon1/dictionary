@@ -3,35 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>단어장</title>
+    <title>단어 시험</title>
 </head>
 <body>
-    <h1>단어장</h1>
-
-    <!-- 단어 추가 폼 -->
-    <form action="/add" method="POST">
-        <label for="word">단어:</label>
-        <input type="text" id="word" name="word" required>
-        <br>
-        <label for="meaning">의미:</label>
-        <input type="text" id="meaning" name="meaning" required>
-        <br>
-        <label for="synonyms">동의어 (쉼표로 구분):</label>
-        <input type="text" id="synonyms" name="synonyms">
-        <br>
-        <button type="submit">추가</button>
-    </form>
-
-    <h2>단어 목록</h2>
-    <ul>
-        {% for entry in vocabulary %}
-            <li>
-                <strong>{{ entry.word }}</strong>: {{ entry.meaning }}<br>
-                {% if entry.synonyms %}
-                    <small>동의어: {{ entry.synonyms | map(attribute='synonym') | join(', ') }}</small>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <h1>단어 시험</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
+        <form method="POST">
+            <ol>
+                {% for word in words %}
+                    <li>
+                        <strong>{{ word.word }}</strong>의 의미를 적어주세요: 
+                        <input type="text" name="word_{{ word.id }}" required>
+                    </li>
+                {% endfor %}
+            </ol>
+            <button type="submit">제출</button>
+        </form>
+    {% endif %}
 </body>
 </html>
