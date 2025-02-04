@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단어 수정</title>
+</head>
+<body>
+    <h1>단어 수정</h1>
+
+    <form action="{{ url_for('edit_word', id=word.id) }}" method="POST">
+        <label for="word">단어:</label>
+        <input type="text" id="word" name="word" value="{{ word.word }}" required>
+        <br>
+        <label for="meaning">의미:</label>
+        <input type="text" id="meaning" name="meaning" value="{{ word.meaning }}" required>
+        <br>
+        <label for="synonyms">동의어 (쉼표로 구분):</label>
+        <input type="text" id="synonyms" name="synonyms" value="{% for syn in word.synonyms %}{{ syn.synonym }},{% endfor %}">
+        <br>
+        <button type="submit">수정 완료</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('index') }}">홈으로 돌아가기</a>
+</body>
+</html>
